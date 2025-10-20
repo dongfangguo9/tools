@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=0, viewport-fit=cover">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        html {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            line-height: 1.6;
+            position: relative;
+            font-family: "Microsoft Yahei", tahoma, arial, "Hiragino Sans GB";
+        }
+
+        input {
+            outline: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent
+        }
+
+        a img {
+            border: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:focus,
+        input:focus,
+        button:focus,
+        textarea:focus {
+            outline: none;
+        }
+
+        input,
+        button,
+        textarea {
+            color: inherit;
+            font: inherit;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        ol,
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+
+    </style>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+            'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+            sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        code {
+            font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+            monospace;
+        }
+
+        html, body {
+            margin: 0;
+            border: 0;
+        }
+
+        html, body, .content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .loading {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            width: 200px;
+            height: 200px;
+            background: url("./loading.gif") no-repeat center;
+            background-size: 100% 100%;
+        }
+
+        .bg-icon {
+            background: url("./icon-bg.png") no-repeat center;
+            background-size: 100% 100%;
+            width: 100%;
+            height: 60%;
+            margin: 0 auto;
+            /* margin-top: 120px; */
+        }
+
+        .tips {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            color: #222222;
+        }
+
+        #wxHref {
+            margin: 0 auto;
+            margin-top: 20px;
+            display: block;
+            width: 70%;
+            height: 38px;
+            line-height: 38px;
+            text-align: center;
+            border-radius: 100px;
+            background-color: red;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+<div class="loading" id="loading"></div>
+<div class="content" id="content">
+    <div class="bg-icon"></div>
+    <div class="tips">请点击下面按钮前往昆山农商银行信用卡小程序</div>
+    <a id="wxHref">打开小程序</a>
+</div>
+
+
+<script>
+
+
+
+    function openUrlSchema(url) {
+        window.location.href = url;
+
+        // 降级处理。。。
+        var $aHref = document.getElementById('wxHref')
+        var $loading = document.getElementById('loading');
+        var $content = document.getElementById('content');
+
+        $aHref.href = url;
+        $content.style.display = 'block';
+        $loading.style.display = 'none';
+
+        var searchMd5 = getSearchMd5();
+        if (searchMd5) {
+            var TOKEN_KEY = searchMd5 + '_urlSchema';
+            var TIME_KEY = searchMd5 + '_time';
+
+            localStorage.setItem(TOKEN_KEY, url);
+            localStorage.setItem(TIME_KEY, (new Date()).getTime());
+        }
+    }
+
+
+    try {
+        const urlParams=new URLSearchParams(window.location.search)
+        var product_code=urlParams.get('a')
+        console.log("product_code",product_code)
+        var trackHref = 'weixin://dl/business/?appid=wxc2c94ed0b3084766&path=packages/1150/pages/02/02/P11500202&query=re='+product_code+'&env_version=release'
+
+        openUrlSchema(trackHref);
+     
+    } catch (e) {
+        console.log(e)
+        // toast(e)
+    }
+
+</script>
+</body>
+</html>
